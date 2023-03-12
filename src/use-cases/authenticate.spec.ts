@@ -1,7 +1,6 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { hash } from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { InvalidCredentialsError } from './errors/invalid-credentials-error'
 import { ResourceNotFoundError } from './errors/resource-not-found-error'
 import { GetUserProfileUseCase } from './get-user-profile'
 
@@ -33,7 +32,7 @@ describe('Get User Profile Use Case', () => {
 	})
 
 	it('should not be able to get user profile with wrong id', async () => {
-		expect(() => sut.execute({
+		await expect(() => sut.execute({
 			userId: 'non-existing-id'
 		})).rejects.toBeInstanceOf(ResourceNotFoundError)
 	})

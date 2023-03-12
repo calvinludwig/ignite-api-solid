@@ -36,7 +36,7 @@ describe('Authenticate Use Case', () => {
 		const email = 'johndoe@example.com'
 		const password = '123456'
 
-		expect(() => sut.execute({
+		await expect(() => sut.execute({
 			email,
 			password
 		})).rejects.toBeInstanceOf(InvalidCredentialsError)
@@ -51,7 +51,7 @@ describe('Authenticate Use Case', () => {
 			created_at: new Date()
 		})
 
-		expect(() => sut.execute({
+		await expect(() => sut.execute({
 			email,
 			password: 'qwe123'
 		})).rejects.toBeInstanceOf(InvalidCredentialsError)
