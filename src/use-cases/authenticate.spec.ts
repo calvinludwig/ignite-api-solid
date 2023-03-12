@@ -1,23 +1,24 @@
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { hash } from 'bcryptjs'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { AuthenticateUseCase } from './authenticate'
 import { InvalidCredentialsError } from './errors/invalid-credentials-error'
+import { ResourceNotFoundError } from './errors/resource-not-found-error'
+import { GetUserProfileUseCase } from './get-user-profile'
 
 let usersRepository: InMemoryUsersRepository
-let sut: AuthenticateUseCase
+let sut: GetUserProfileUseCase
 
-describe('Authenticate Use Case', () => {
+describe('Get User Profile Use Case', () => {
 
 	beforeEach(() => {
 		usersRepository = new InMemoryUsersRepository()
-		sut = new AuthenticateUseCase(usersRepository)
+		sut = new GetUserProfileUseCase(usersRepository)
 	})
 
-	it('should be able to authenticate', async () => {
+	it('should be able to get user profile', async () => {
 		const email = 'johndoe@example.com'
 		const password = '123456'
-		await usersRepository.create({
+		const createdUser = await usersRepository.create({
 			name: 'John Doe',
 			email,
 			password_hash: await hash(password, 6),
@@ -25,35 +26,15 @@ describe('Authenticate Use Case', () => {
 		})
 
 		const { user } = await sut.execute({
-			email,
-			password
+			userId: createdUser.id
 		})
 
-		expect(user.id).toEqual(expect.any(String))
+		expect(user.name).toEqual('John Doe')
 	})
 
-	it('should not be able to authenticate with wrong email', async () => {
-		const email = 'johndoe@example.com'
-		const password = '123456'
-
+	it('should not be able to get user profile with wrong id', async () => {
 		expect(() => sut.execute({
-			email,
-			password
-		})).rejects.toBeInstanceOf(InvalidCredentialsError)
-	})
-
-	it('should not be able to authenticate with wrong password', async () => {
-		const email = 'johndoe@example.com'
-		await usersRepository.create({
-			name: 'John Doe',
-			email,
-			password_hash: await hash('123456', 6),
-			created_at: new Date()
-		})
-
-		expect(() => sut.execute({
-			email,
-			password: 'qwe123'
-		})).rejects.toBeInstanceOf(InvalidCredentialsError)
+			userId: 'non-existing-id'
+		})).rejects.toBeInstanceOf(ResourceNotFoundError)
 	})
 })
