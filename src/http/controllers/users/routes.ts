@@ -5,8 +5,8 @@ import { profile } from './profile.controller'
 import { register } from './register.controller'
 
 export async function usersRoutes(app: FastifyInstance) {
-  app.post('/users', register)
-  app.post('/sessions', authenticate)
+	app.post('/users', register)
+	app.post('/sessions', authenticate)
 
-  app.get('/me', { onRequest: [verifyJWT] }, profile)
+	app.get('/me', { onRequest: [verifyJWT] }, profile)
 }
