@@ -2,21 +2,22 @@ import { CheckInsRepository } from '@/repositories/check-ins-repository'
 import { CheckIn } from '@prisma/client'
 
 interface UseCaseRequest {
-	userId: string
-	page: number
+  userId: string
+  page: number
 }
 
 interface UseCaseResponse {
-	checkIns: CheckIn[]
+  checkIns: CheckIn[]
 }
 
 export class ListUserCheckInsHistoryUseCase {
-	constructor(
-		private checkInsRepository: CheckInsRepository,
-	) {}
+  constructor(private checkInsRepository: CheckInsRepository) {}
 
-	async execute({ userId, page }: UseCaseRequest): Promise<UseCaseResponse> {
-		const checkIns = await this.checkInsRepository.findManyByUserId(userId, page)
-		return { checkIns }
-	}
+  async execute({ userId, page }: UseCaseRequest): Promise<UseCaseResponse> {
+    const checkIns = await this.checkInsRepository.findManyByUserId(
+      userId,
+      page,
+    )
+    return { checkIns }
+  }
 }
