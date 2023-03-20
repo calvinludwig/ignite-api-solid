@@ -13,9 +13,12 @@ describe('Profile (e2e)', () => {
 	})
 
 	it('should be able to authenticate', async () => {
-		const { token } = await createAndAuthenticateUser(app)
+		const { token } = await createAndAuthenticateUser(app, false)
 
-		const response = await request(app.server).get('/me').set('Authorization', `Bearer ${token}`).send()
+		const response = await request(app.server)
+			.get('/me')
+			.set('Authorization', `Bearer ${token}`)
+			.send()
 
 		expect(response.statusCode).toEqual(200)
 		expect(response.body.user).toEqual(
