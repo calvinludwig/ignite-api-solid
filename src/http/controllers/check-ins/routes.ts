@@ -9,7 +9,7 @@ export async function checkInRoutes(app: FastifyInstance) {
 	app.addHook('onRequest', verifyJWT)
 
 	app.post('/gyms/:gymId/check-ins', create)
-	app.patch('/check-ins/:gymId/validate', validate)
+	app.patch('/check-ins/:id/validate', validate)
 	app.get('/check-ins/history', history)
 	app.get('/check-ins/metrics', metrics)
 }

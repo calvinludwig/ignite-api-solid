@@ -36,6 +36,7 @@ describe('Validate Check-in (e2e)', () => {
 			.patch(`/check-ins/${checkIn.id}/validate`)
 			.set('Authorization', `Bearer ${token}`)
 			.send()
+
 		expect(response.statusCode).toEqual(204)
 
 		checkIn = await prisma.checkIn.findUniqueOrThrow({

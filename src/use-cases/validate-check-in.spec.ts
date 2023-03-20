@@ -28,7 +28,9 @@ describe('Validate Check In use Case', () => {
 			checkInId: createCheckIn.id,
 		})
 		expect(checkIn.validated_at).toEqual(expect.any(Date))
-		expect(checkInsRepository.items[0].validated_at).toEqual(expect.any(Date))
+		expect(checkInsRepository.items[0].validated_at).toEqual(
+			expect.any(Date),
+		)
 	})
 
 	it('should not be able to validate an inexistent check-in', async () => {
