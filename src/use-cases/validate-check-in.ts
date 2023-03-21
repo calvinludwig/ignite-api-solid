@@ -20,7 +20,10 @@ export class ValidateCheckInUseCase {
 
 		if (!checkIn) throw new ResourceNotFoundError()
 
-		const distanceInMinutesFromCheckInCreation = dayjs(new Date()).diff(checkIn.created_at, 'minutes')
+		const distanceInMinutesFromCheckInCreation = dayjs(new Date()).diff(
+			checkIn.created_at,
+			'minutes',
+		)
 		if (distanceInMinutesFromCheckInCreation > 20) throw new LateCheckInValidationError()
 
 		checkIn.validated_at = new Date()
