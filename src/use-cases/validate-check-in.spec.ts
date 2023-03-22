@@ -23,7 +23,6 @@ describe('Validate Check In use Case', () => {
 			gym_id: 'gym-01',
 			user_id: 'user_01',
 		})
-
 		const { checkIn } = await sut.execute({
 			checkInId: createCheckIn.id,
 		})
@@ -41,15 +40,12 @@ describe('Validate Check In use Case', () => {
 
 	it('should not be able to validate the check-in after 20 minutes of its creation', async () => {
 		vi.setSystemTime(new Date(2023, 0, 1, 13, 40))
-
 		const createCheckIn = await checkInsRepository.create({
 			gym_id: 'gym-01',
 			user_id: 'user_01',
 		})
-
 		const twentyOnMinutesInMs = 1000 * 60 * 21
 		vi.advanceTimersByTime(twentyOnMinutesInMs)
-
 		await expect(() =>
 			sut.execute({
 				checkInId: createCheckIn.id,

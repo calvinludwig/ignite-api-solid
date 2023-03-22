@@ -14,7 +14,6 @@ describe('Search Gyms e2e', () => {
 
 	it('should be able to search for gyms by title', async () => {
 		const { token } = await createAndAuthenticateUser(app, true)
-
 		await request(app.server).post('/gyms').set('Authorization', `Bearer ${token}`).send({
 			title: 'JavaScript Gym',
 			description: 'Some description',
@@ -36,7 +35,6 @@ describe('Search Gyms e2e', () => {
 			})
 			.set('Authorization', `Bearer ${token}`)
 			.send()
-
 		expect(response.statusCode).toEqual(200)
 		expect(response.body.gyms).toHaveLength(1)
 		expect(response.body.gyms).toEqual([

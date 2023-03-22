@@ -8,7 +8,6 @@ import { gymsRoutes } from './http/controllers/gyms/routes'
 import { usersRoutes } from './http/controllers/users/routes'
 
 export const app = fastify()
-
 app.register(fastifyJwt, {
 	secret: env.JWT_SECRET,
 	cookie: {
@@ -19,13 +18,10 @@ app.register(fastifyJwt, {
 		expiresIn: '10m',
 	},
 })
-
 app.register(fastifyCookie)
-
 app.register(usersRoutes)
 app.register(gymsRoutes)
 app.register(checkInRoutes)
-
 app.setErrorHandler((error, _, reply) => {
 	if (error instanceof ZodError) {
 		return reply.status(400).send({
@@ -33,12 +29,10 @@ app.setErrorHandler((error, _, reply) => {
 			issues: error.format(),
 		})
 	}
-
 	if (env.NODE_ENV !== 'production') {
 		console.log(error)
 	} else {
 		// TODO: Here we should log to an external tool like Sentry
 	}
-
 	return reply.status(500).send({ message: 'Internal server error.' })
 })

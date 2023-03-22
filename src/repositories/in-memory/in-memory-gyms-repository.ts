@@ -22,9 +22,7 @@ export class InMemoryGymsRepository implements GymsRepository {
 			longitude: new Prisma.Decimal(data.longitude.toString()),
 			created_ad: new Date(),
 		}
-
 		this.items.push(gym)
-
 		return gym
 	}
 

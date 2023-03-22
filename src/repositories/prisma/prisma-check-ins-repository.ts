@@ -13,7 +13,6 @@ export class PrismaCheckInsRepository implements CheckInsRepository {
 	async findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null> {
 		const startOfDay = dayjs(date).startOf('date')
 		const endOfDay = dayjs(date).endOf('date')
-
 		return await prisma.checkIn.findFirst({
 			where: {
 				user_id: userId,

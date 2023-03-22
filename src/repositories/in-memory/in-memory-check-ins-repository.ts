@@ -14,16 +14,13 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
 			validated_at: data.validated_at ? new Date(data.validated_at) : null,
 			created_at: new Date(),
 		}
-
 		this.items.push(checkIn)
-
 		return checkIn
 	}
 
 	async findByUserIdOnDate(userId: string, date: Date) {
 		const startOfDay = dayjs(date).startOf('date')
 		const endOfDay = dayjs(date).endOf('date')
-
 		const checkInOnSameDate = this.items.find((checkIn) => {
 			if (checkIn.user_id !== userId) {
 				return false
@@ -55,11 +52,9 @@ export class InMemoryCheckInsRepository implements CheckInsRepository {
 
 	async save(checkIn: CheckIn) {
 		const checkInIndex = this.items.findIndex((item) => item.id === checkIn.id)
-
 		if (checkInIndex >= 0) {
 			this.items[checkInIndex] = checkIn
 		}
-
 		return checkIn
 	}
 }

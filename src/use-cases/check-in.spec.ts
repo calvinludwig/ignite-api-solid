@@ -17,7 +17,6 @@ describe('Check In use Case', () => {
 		gymsRepository = new InMemoryGymsRepository()
 		sut = new CheckInUseCase(checkInsRepository, gymsRepository)
 		vi.useFakeTimers()
-
 		gymsRepository.create({
 			id: 'b',
 			title: 'Javascript GYM',
@@ -39,20 +38,17 @@ describe('Check In use Case', () => {
 			userLatitude: 0,
 			userLongitude: 0,
 		})
-
 		expect(checkIn.id).toEqual(expect.any(String))
 	})
 
 	it('should not be able to check in twice in the same day', async () => {
 		vi.setSystemTime(new Date(2022, 0, 20, 8, 0, 0))
-
 		await sut.execute({
 			userId: 'a',
 			gymId: 'b',
 			userLatitude: 0,
 			userLongitude: 0,
 		})
-
 		await expect(() =>
 			sut.execute({
 				userId: 'a',
@@ -65,29 +61,24 @@ describe('Check In use Case', () => {
 
 	it('should be able to check in twice but int different days', async () => {
 		vi.setSystemTime(new Date(2022, 0, 20, 8, 0, 0))
-
 		await sut.execute({
 			userId: 'a',
 			gymId: 'b',
 			userLatitude: 0,
 			userLongitude: 0,
 		})
-
 		vi.setSystemTime(new Date(2022, 0, 21, 8, 0, 0))
-
 		const { checkIn } = await sut.execute({
 			userId: 'a',
 			gymId: 'b',
 			userLatitude: 0,
 			userLongitude: 0,
 		})
-
 		expect(checkIn.id).toEqual(expect.any(String))
 	})
 
 	it('should not be able to check in on distant gym', async () => {
 		const gymId = randomUUID()
-
 		gymsRepository.items.push({
 			id: gymId,
 			title: 'Javascript GYM',
@@ -96,7 +87,6 @@ describe('Check In use Case', () => {
 			latitude: new Decimal(-29.4692983),
 			longitude: new Decimal(-52.0885952),
 		})
-
 		await expect(() =>
 			sut.execute({
 				userId: 'a',

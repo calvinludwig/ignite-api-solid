@@ -11,6 +11,5 @@ export async function validate(request: FastifyRequest, reply: FastifyReply) {
 	await validateCheckInUseCase.execute({
 		checkInId: id,
 	})
-
 	return reply.status(204).send()
 }

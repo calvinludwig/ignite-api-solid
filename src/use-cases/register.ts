@@ -24,15 +24,12 @@ export class RegisterUseCase {
 		if (userWithSameEmail) {
 			throw new UserAlreadyExistsError()
 		}
-
 		const password_hash = await hash(password, 6)
-
 		const user = await this.usersRepository.create({
 			name,
 			email,
 			password_hash,
 		})
-
 		return { user }
 	}
 }

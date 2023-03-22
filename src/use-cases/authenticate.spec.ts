@@ -22,11 +22,9 @@ describe('Get User Profile Use Case', () => {
 			password_hash: await hash(password, 6),
 			created_at: new Date(),
 		})
-
 		const { user } = await sut.execute({
 			userId: createdUser.id,
 		})
-
 		expect(user.name).toEqual('John Doe')
 	})
 

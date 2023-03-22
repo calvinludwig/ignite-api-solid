@@ -9,6 +9,12 @@
       "error",
       "tab"
     ],
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
     "prettier/prettier": [
       "error",
       {

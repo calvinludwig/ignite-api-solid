@@ -12,7 +12,6 @@ interface UseCaseResponse {
 
 export class SearchGymsUseCase {
 	constructor(private gymsRepository: GymsRepository) {}
-
 	async execute({ query, page }: UseCaseRequest): Promise<UseCaseResponse> {
 		const gyms = await this.gymsRepository.searchMany(query, page)
 		return { gyms }
